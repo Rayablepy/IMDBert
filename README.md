@@ -7,7 +7,7 @@ The base model is trained in `main.ipynb`, saved both locally (`./models/IMDBert
 
 ## Features
 
-- **Gradio UI** (`app.py`) — hosted as a Hugging Face Space via the YAML metadata above.
+- **Streamlit UI** (`app.py`) — hosted on StreamLit Cloud.
 - **CLI tester** (`tester.py`) — interactive review-by-review predictions in the terminal.
 - Auto-detect device (MPS on Mac, CUDA on Windows, else CPU).
 - Loads the model from the local folder first, falling back to the Hugging Face Hub automatically.
@@ -19,10 +19,10 @@ pip install -r requirements.txt
 # or: uv sync
 ```
 
-### Run the Gradio UI
+### Run the StreamLit UI
 
 ```sh
-python ui.py
+python app.py
 ```
 
 ### Run the CLI tester
@@ -45,7 +45,7 @@ locally and to the Hugging Face Hub.
 | File                | Purpose                                          |
 | ------------------- | ------------------------------------------------ |
 | `loader.py`         | Shared model/device loading + prediction helpers |
-| `ui.py`             | Gradio app (`app_file` for the HF Space)         |
+| `app.py`             | StreamLit app (`app_file` for the HF Space)         |
 | `tester.py`         | Terminal-based sentiment tester                  |
 | `main.ipynb`        | Training and evaluation notebook                 |
 | `requirements.txt`  | Pinned Python dependencies                       |
@@ -58,4 +58,4 @@ Rayhan-08/IMDBert
 ```
 
 DistilBERT-base-uncased fine-tuned on IMDB with a 2-class classification head.
-Inputs are truncated/padded to 256 tokens.
+Inputs are truncated to 256 tokens.
