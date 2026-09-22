@@ -1,11 +1,3 @@
----
-title: IMDBert
-sdk: gradio
-sdk_version: 6.28.0
-app_file: app.py
-pinned: false
-license: mit
----
 
 # IMDBert
 

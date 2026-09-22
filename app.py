@@ -1,26 +1,33 @@
-import gradio as gr
+import streamlit as st
+
 from loader import classify, get_device, get_model
 
-DEVICE = get_device()
-MODEL, TOKENIZER = get_model()
-MODEL.to(DEVICE)
-print(f"Model loaded on: {DEVICE}")
+st.set_page_config(page_title="IMDBert Sentiment Analysis", page_icon="🎬")
 
-
-def classify_wrapper(review):
-    return classify(review, MODEL, TOKENIZER, DEVICE)
-
-
-demo = gr.Interface(
-    fn=classify_wrapper,
-    inputs=gr.Textbox(lines=4, placeholder="Type a movie review here..."),
-    outputs=[
-        gr.Label(num_top_classes=2),
-        gr.Textbox(label="Confidence"),
-    ],
-    title="IMDBert Sentiment Analysis",
-    description="DistilBERT fine-tuned on IMDB movie reviews to predict Positive/Negative sentiment.",
+st.title("IMDBert Sentiment Analysis")
+st.write(
+    "DistilBERT fine-tuned on IMDB movie reviews to predict Positive/Negative sentiment."
 )
 
-if __name__ == "__main__":
-    demo.launch()
+@st.cache_resource
+def load_model():
+    device = get_device()
+    model, tokenizer = get_model()
+    model.to(device)
+    return model, tokenizer, device
+
+MODEL, TOKENIZER, DEVICE = load_model()
+st.caption(f"Model loaded on: {DEVICE}")
+
+review = st.text_area(
+    "Movie review",
+    placeholder="Type a movie review here...",
+    height=150,
+)
+
+if st.button("Classify", type="primary") and review.strip():
+    label, confidence = classify(review, MODEL, TOKENIZER, DEVICE)
+    if label:
+        score = float(confidence.rstrip("%")) / 100
+        st.metric("Sentiment", label)
+        st.progress(score, text=f"Confidence: {confidence}")
