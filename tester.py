@@ -33,6 +33,8 @@ def predict_sentiment(text, model, tokenizer, device):
 
 device=get_device()
 model,tokenizer=get_model()
+if model is None or tokenizer is None:
+    raise SystemExit("Failed to load model. Try Huggingface download (option 2).")
 model.to(device)
 while True:
     review = input("Review(q to quit): \n")
