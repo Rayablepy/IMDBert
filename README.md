@@ -1,11 +1,8 @@
 ---
 title: IMDBert
-emoji: 🎬
-colorFrom: indigo
-colorTo: purple
 sdk: gradio
 sdk_version: 6.28.0
-app_file: ui.py
+app_file: app.py
 pinned: false
 license: mit
 ---
@@ -18,7 +15,7 @@ The base model is trained in `main.ipynb`, saved both locally (`./models/IMDBert
 
 ## Features
 
-- **Gradio UI** (`ui.py`) — hosted as a Hugging Face Space via the YAML metadata above.
+- **Gradio UI** (`app.py`) — hosted as a Hugging Face Space via the YAML metadata above.
 - **CLI tester** (`tester.py`) — interactive review-by-review predictions in the terminal.
 - Auto-detect device (MPS on Mac, CUDA on Windows, else CPU).
 - Loads the model from the local folder first, falling back to the Hugging Face Hub automatically.
